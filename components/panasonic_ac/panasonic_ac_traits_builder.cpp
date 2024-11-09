@@ -19,9 +19,9 @@ PanasonicACTraitsBuilder::PanasonicACTraitsBuilder() {
         climate::CLIMATE_MODE_OFF,
         climate::CLIMATE_MODE_HEAT,
         climate::CLIMATE_MODE_COOL,
+        climate::CLIMATE_MODE_DRY,
         climate::CLIMATE_MODE_HEAT_COOL,
         climate::CLIMATE_MODE_FAN_ONLY
-        // climate::CLIMATE_MODE_DRY, TODO: do i need this?
     });
     // Set default OFF swing mode
     this->traits.add_supported_swing_mode(climate::CLIMATE_SWING_OFF);
