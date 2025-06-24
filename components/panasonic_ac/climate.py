@@ -62,10 +62,10 @@ VERTICAL_SWING_OPTIONS = [
     "down"
 ]
 
-SWITCH_SCHEMA = switch.SWITCH_SCHEMA.extend(cv.COMPONENT_SCHEMA).extend(
+SWITCH_SCHEMA = switch.switch_schema(PanasonicACSwitch).extend(cv.COMPONENT_SCHEMA).extend(
     {cv.GenerateID(): cv.declare_id(PanasonicACSwitch)}
 )
-SELECT_SCHEMA = select.SELECT_SCHEMA.extend(
+SELECT_SCHEMA = select.select_schema(PanasonicACSelect).extend(
     {cv.GenerateID(CONF_ID): cv.declare_id(PanasonicACSelect)}
 )
 
@@ -144,7 +144,7 @@ TRAITS_SCHEMA = cv.Schema({
     cv.Required(CONF_CURRENT_POWER_CONSUMPTION): CURRENT_POWER_CONSUMPTION_SCHEMA
 })
 
-CONFIG_SCHEMA = climate.CLIMATE_SCHEMA.extend(
+CONFIG_SCHEMA = climate.climate_schema(PanasonicAC).extend(
     {
         cv.GenerateID(): cv.declare_id(PanasonicACCNT),
         cv.Required(CONF_TRAITS): TRAITS_SCHEMA
@@ -213,7 +213,7 @@ async def setup_traits_(panasonic_ac, traits_config):
 
 async def to_code(config):
     panasonic_ac = cg.new_Pvariable(config[CONF_ID])
-    
+
     await cg.register_component(panasonic_ac, config)
     await climate.register_climate(panasonic_ac, config)
     await uart.register_uart_device(panasonic_ac, config)

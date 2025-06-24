@@ -18,9 +18,9 @@ static const std::string FAN_SPEED_LEVEL_3 = "3";
 static const std::string FAN_SPEED_LEVEL_4 = "4";
 static const std::string FAN_SPEED_LEVEL_5 = "5";
 
-static const std::string PRESET_NONE = "None "; // HACK: setting to "None" (without trailing space) won't work because it will be parsed as built-in CLIMATE_PRESET_NONE
-static const std::string PRESET_QUIET = "Quiet";
-static const std::string PRESET_POWERFUL = "Powerful";
+static const std::string CLIMATE_PRESET_NONE = "None "; // HACK: setting to "None" (without trailing space) won't work because it will be parsed as built-in CLIMATE_CLIMATE_PRESET_NONE
+static const std::string CLIMATE_PRESET_SLEEP = "Quiet";
+static const std::string CLIMATE_PRESET_BOOST = "Powerful";
 
 class PanasonicACTraitsBuilder {
     public:
