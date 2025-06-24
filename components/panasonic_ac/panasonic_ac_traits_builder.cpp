@@ -25,11 +25,11 @@ PanasonicACTraitsBuilder::PanasonicACTraitsBuilder() {
     });
     // Set default OFF swing mode
     this->traits.add_supported_swing_mode(climate::CLIMATE_SWING_OFF);
-    // Set default custom presets
-    this->traits.set_supported_custom_presets({
-        CLIMATE_PRESET_NONE,
-        CLIMATE_PRESET_SLEEP,
-        CLIMATE_PRESET_BOOST
+    // Set default presets
+    this->traits.set_supported_presets({
+        climate::CLIMATE_PRESET_NONE,
+        climate::CLIMATE_PRESET_ECO,
+        climate::CLIMATE_PRESET_BOOST
     });
     // Set default fan speed levels
     this->traits.set_supported_custom_fan_modes({
