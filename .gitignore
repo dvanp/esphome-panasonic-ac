@@ -9,3 +9,6 @@ venv/
 builds/
 *.py[cod]
 .DS_Store
+graphify-out/
+.codex/
+AGENTS.md
