@@ -85,7 +85,7 @@ void PanasonicACCNT::control(const climate::ClimateCall &call) {
     this->cmd[1] = *call.get_target_temperature() / TEMPERATURE_STEP;
   }
 
-  if (call.get_custom_fan_mode().has_value()) {
+  if (call.has_custom_fan_mode()) {
     ESP_LOGV(TAG, "Requested fan mode change");
 
     if (this->preset != climate::CLIMATE_PRESET_NONE)
@@ -94,19 +94,19 @@ void PanasonicACCNT::control(const climate::ClimateCall &call) {
       this->cmd[5] = (this->cmd[5] & 0xF0);  // Clear right nib for none preset
     }
 
-    std::string fanMode = *call.get_custom_fan_mode();
+    auto fan_mode = call.get_custom_fan_mode();
 
-    if (fanMode == FAN_SPEED_LEVEL_AUTO)
+    if (fan_mode == FAN_SPEED_LEVEL_AUTO)
       this->cmd[3] = 0xA0;
-    else if (fanMode == FAN_SPEED_LEVEL_1)
+    else if (fan_mode == FAN_SPEED_LEVEL_1)
       this->cmd[3] = 0x30;
-    else if (fanMode == FAN_SPEED_LEVEL_2)
+    else if (fan_mode == FAN_SPEED_LEVEL_2)
       this->cmd[3] = 0x40;
-    else if (fanMode == FAN_SPEED_LEVEL_3)
+    else if (fan_mode == FAN_SPEED_LEVEL_3)
       this->cmd[3] = 0x50;
-    else if (fanMode == FAN_SPEED_LEVEL_4)
+    else if (fan_mode == FAN_SPEED_LEVEL_4)
       this->cmd[3] = 0x60;
-    else if (fanMode == FAN_SPEED_LEVEL_5)
+    else if (fan_mode == FAN_SPEED_LEVEL_5)
       this->cmd[3] = 0x70;
     else
       ESP_LOGV(TAG, "Unsupported fan mode requested");
@@ -157,7 +157,8 @@ void PanasonicACCNT::control(const climate::ClimateCall &call) {
 void PanasonicACCNT::set_data(bool set) {
   this->mode = determine_mode(this->data[0]);
   this->action = PanasonicAC::determine_action();
-  this->custom_fan_mode = determine_fan_speed(this->data[3]);
+  const std::string fan_mode = determine_fan_speed(this->data[3]);
+  this->set_custom_fan_mode_(fan_mode.c_str());
 
   std::string verticalSwing = determine_vertical_swing(this->data[4]);
   std::string horizontalSwing = determine_horizontal_swing(this->data[4]);

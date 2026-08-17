@@ -8,6 +8,11 @@ namespace panasonic_ac {
 static const char* TAG = "panasonic_ac";
 
 void PanasonicAC::setup() {
+  // Custom fan modes are owned by Climate as of ESPHome 2026.5. The old
+  // ClimateTraits setter is removed in ESPHome 2026.11.
+  this->set_supported_custom_fan_modes({FAN_SPEED_LEVEL_AUTO, FAN_SPEED_LEVEL_1, FAN_SPEED_LEVEL_2,
+                                        FAN_SPEED_LEVEL_3, FAN_SPEED_LEVEL_4, FAN_SPEED_LEVEL_5});
+
   // Initialize times
   this->init_time_ = millis();
   this->last_packet_sent_ = millis();
@@ -75,8 +80,7 @@ void PanasonicAC::update_target_temperature(uint8_t raw_value) {
 void PanasonicAC::update_swing_horizontal(const std::string &swing) {
   this->horizontal_swing_state_ = swing;
 
-  if (this->horizontal_swing_select_ != nullptr &&
-      this->horizontal_swing_select_->state != this->horizontal_swing_state_) {
+  if (this->horizontal_swing_select_ != nullptr) {
     this->horizontal_swing_select_->publish_state(this->horizontal_swing_state_);  // Set current horizontal swing position
   }
 }
@@ -84,7 +88,7 @@ void PanasonicAC::update_swing_horizontal(const std::string &swing) {
 void PanasonicAC::update_swing_vertical(const std::string &swing) {
   this->vertical_swing_state_ = swing;
 
-  if (this->vertical_swing_select_ != nullptr && this->vertical_swing_select_->state != this->vertical_swing_state_)
+  if (this->vertical_swing_select_ != nullptr)
     this->vertical_swing_select_->publish_state(this->vertical_swing_state_);  // Set current vertical swing position
 }
 
@@ -133,7 +137,8 @@ void PanasonicAC::set_current_temperature_sensor(sensor::Sensor *current_tempera
 
 void PanasonicAC::set_vertical_swing_select(select::Select *vertical_swing_select) {
   this->vertical_swing_select_ = vertical_swing_select;
-  this->vertical_swing_select_->add_on_state_callback([this](const std::string &value, size_t index) {
+  this->vertical_swing_select_->add_on_state_callback([this](size_t index) {
+    const char *value = this->vertical_swing_select_->option_at(index);
     if (value == this->vertical_swing_state_)
       return;
     this->on_vertical_swing_change(value);
@@ -142,7 +147,8 @@ void PanasonicAC::set_vertical_swing_select(select::Select *vertical_swing_selec
 
 void PanasonicAC::set_horizontal_swing_select(select::Select *horizontal_swing_select) {
   this->horizontal_swing_select_ = horizontal_swing_select;
-  this->horizontal_swing_select_->add_on_state_callback([this](const std::string &value, size_t index) {
+  this->horizontal_swing_select_->add_on_state_callback([this](size_t index) {
+    const char *value = this->horizontal_swing_select_->option_at(index);
     if (value == this->horizontal_swing_state_)
       return;
     this->on_horizontal_swing_change(value);

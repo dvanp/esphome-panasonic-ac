@@ -13,12 +13,12 @@ static const uint8_t TEMPERATURE_THRESHOLD = 100;  // Maximum temperature the AC
 
 // Custom fan modes for Panasonic AC - uses custom modes instead of built-in ESPHome fan modes
 // to maintain all 5 speed levels + auto (ESPHome built-in only supports LOW/MEDIUM/HIGH)
-static const std::string FAN_SPEED_LEVEL_AUTO = "Dynamisch";
-static const std::string FAN_SPEED_LEVEL_1 = "Level 1";
-static const std::string FAN_SPEED_LEVEL_2 = "Level 2";
-static const std::string FAN_SPEED_LEVEL_3 = "Level 3";
-static const std::string FAN_SPEED_LEVEL_4 = "Level 4";
-static const std::string FAN_SPEED_LEVEL_5 = "Level 5";
+static constexpr const char *FAN_SPEED_LEVEL_AUTO = "Dynamisch";
+static constexpr const char *FAN_SPEED_LEVEL_1 = "Level 1";
+static constexpr const char *FAN_SPEED_LEVEL_2 = "Level 2";
+static constexpr const char *FAN_SPEED_LEVEL_3 = "Level 3";
+static constexpr const char *FAN_SPEED_LEVEL_4 = "Level 4";
+static constexpr const char *FAN_SPEED_LEVEL_5 = "Level 5";
 
 
 

@@ -4,12 +4,10 @@ namespace esphome {
 namespace panasonic_ac {
 
 PanasonicACTraitsBuilder::PanasonicACTraitsBuilder() {
-    // Enable actions support
-    this->traits.set_supports_action(true);
-    // Enable current temperature supports
-    this->traits.set_supports_current_temperature(true);
-    // Disable two point target temperature support
-    this->traits.set_supports_two_point_target_temperature(false);
+    // ESPHome 2026.7 replaced the individual supports_* setters with feature flags.
+    // Two-point target temperature support remains disabled by default.
+    this->traits.add_feature_flags(climate::CLIMATE_SUPPORTS_ACTION |
+                                   climate::CLIMATE_SUPPORTS_CURRENT_TEMPERATURE);
     // Set visual temperature parameters
     this->traits.set_visual_min_temperature(MIN_TEMPERATURE);
     this->traits.set_visual_max_temperature(MAX_TEMPERATURE);
@@ -30,15 +28,6 @@ PanasonicACTraitsBuilder::PanasonicACTraitsBuilder() {
         climate::CLIMATE_PRESET_NONE,
         climate::CLIMATE_PRESET_ECO,
         climate::CLIMATE_PRESET_BOOST
-    });
-    // Set default fan speed levels
-    this->traits.set_supported_custom_fan_modes({
-        FAN_SPEED_LEVEL_AUTO,
-        FAN_SPEED_LEVEL_1,
-        FAN_SPEED_LEVEL_2,
-        FAN_SPEED_LEVEL_3,
-        FAN_SPEED_LEVEL_4,
-        FAN_SPEED_LEVEL_5,
     });
 }
 

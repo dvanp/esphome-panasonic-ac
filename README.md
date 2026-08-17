@@ -2,6 +2,10 @@
 
 Custom [ESPHome External Component](https://esphome.io/components/external_components) for Panasonic AC-s using CN-CNT based protocol.
 
+The component is tested against ESPHome 2026.7.4. Its climate feature flags,
+custom fan modes, entity icons, and select callbacks use the current ESPHome
+APIs.
+
 Forked from [DomiStyle's repository](https://github.com/DomiStyle/esphome-panasonic-ac). Many thanks for his great work!
 
 # Protocol description
